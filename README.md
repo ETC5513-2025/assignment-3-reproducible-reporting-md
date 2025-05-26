@@ -2,8 +2,8 @@
 
 Group Members:
 
-*
-*
-*
+* Mey Siv 
+* Devaansh Gupta
 
-Topic: 
+
+Topic: Energy Consumption
