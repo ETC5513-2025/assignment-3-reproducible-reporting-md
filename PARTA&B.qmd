@@ -1,0 +1,18 @@
+---
+title: "ETC5513 Assignment 3"
+author: "Mey Siv and Devaansh Gupta"
+editor: visual
+format: 
+  html: 
+    theme: cerulean
+  pdf: default
+execute:
+    echo: true
+    warning: false
+    message: false
+---
+
+
+
+
+
