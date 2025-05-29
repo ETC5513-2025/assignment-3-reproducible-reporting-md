@@ -6,4 +6,4 @@ Group Members:
 * Devaansh Gupta
 
 
-Topic: Energy Consumption
+Topic: Global Energy Consumption
