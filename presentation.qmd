@@ -1,0 +1,27 @@
+---
+title: "Global Energy Consumption Trends (2019–2023)"
+author: 
+  - Devaansh
+  - Mey
+format: 
+  revealjs:
+    theme: solarized
+    slide-number: true
+    toc: false
+    transition: slide
+    self-contained: true
+execute: 
+  echo: false
+  message: false
+  warning: false
+---
+
+
+
+
+
+
+
+
+
+
