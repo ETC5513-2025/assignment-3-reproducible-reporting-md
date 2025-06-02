@@ -16,8 +16,6 @@ execute:
     warning: false
     message: false
 ---
-### Result 
-
 
 ```{r setup, include=FALSE}
 library(dplyr)
