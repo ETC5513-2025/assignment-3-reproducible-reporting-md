@@ -12,7 +12,6 @@ execute:
     message: false
 ---
 
+### Reference 
 
-
-
-
+Hannah Ritchie, Pablo Rosado, and Max Roser (2023) - “Energy” Published online at OurWorldinData.org. Retrieved from: 'https://ourworldindata.org/energy' [Online Resource]
