@@ -21,25 +21,18 @@ execute:
 library(dplyr)
 library(ggplot2)
 library(kableExtra)
-<<<<<<< HEAD
+library(tidyr)
 ```
 
-<<<<<<< HEAD
 ## Executive Summary
 
 Australia, India, the United States, China, and the United Kingdom's worldwide energy consumption patterns from 2019 to 2023 are examined in this paper. It examines how low-carbon and renewable energy sources are replacing fossil fuels. Important variables are looked at, including GDP, population, and several energy measurements. The results provide credence to current debates about the economic ramifications and sustainability of energy.
-=======
+
 ## Introduction
 
 Energy use is essential for both environmental sustainability and economic growth. Countries have been focusing more and more on low-carbon and renewable energy sources in recent years. Australia, India, the United States, China, and the United Kingdom are the five major economies whose energy consumption trends are evaluated in this paper from 2019 to 2023. These nations were chosen because of their varied economic systems, population sizes, and energy strategies. Understanding the evolution of energy demand, particularly from fossil and renewable sources, is the goal. We also take into account the correlation between these changes and changes in the population and GDP. The goal of the analysis is to highlight both domestic and international trends related to energy policy. To guarantee clarity and reproducibility, R and R Markdown are used for all analyses.
 
->>>>>>> introduction
-=======
-library(tidyr)
-```
-
 ## Methodology
->>>>>>> methodology
 
 ```{r data-cleaning, message=FALSE, warning=FALSE}
 
