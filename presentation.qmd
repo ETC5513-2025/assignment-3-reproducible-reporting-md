@@ -76,8 +76,7 @@ library(tidyr)
 library(ggplot2)
 
 
-energy <- read.csv("owid-energy-data.csv")
-
+energy <- read.csv("data/owid-energy-data.csv")
 countries <- c("Australia", "India", "United States", "China", "United Kingdom")
 years <- 2019:2023
 
