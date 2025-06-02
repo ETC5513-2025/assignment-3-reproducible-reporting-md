@@ -17,7 +17,6 @@ execute:
     message: false
 ---
 
-
 ```{r setup, include=FALSE}
 library(dplyr)
 library(ggplot2)
@@ -25,9 +24,7 @@ library(kableExtra)
 library(tidyr)
 ```
 
-
 ## Executive Summary
-
 
 Australia, India, the United States, China, and the United Kingdom's worldwide energy consumption patterns from 2019 to 2023 are examined in this paper. It examines how low-carbon and renewable energy sources are replacing fossil fuels. Important variables are looked at, including GDP, population, and several energy measurements. The results provide credence to current debates about the economic ramifications and sustainability of energy.
 
@@ -73,13 +70,12 @@ Facet plots are used in the figure to display time-series trends of both fossil 
 
 To ensure complete reproducibility, all analyses and visualizations were carried out in R utilizing tidyverse tools through R Markdown. The use of chunk options (`echo=FALSE`, `message=FALSE`, `warning=FALSE`) ensures that code does not distract from the professional presentation of the report, while still enabling seamless re-execution if the data or methods are updated.
 
-### Table 1: Summary of average energy metrics (2019–2023) for selected countries.
+Table 1: Summary of average energy metrics (2019–2023) for selected countries.
 
 ```{r summary-table, echo=FALSE, results='asis'}
-
-
 #| label: tbl-summary
 #| tbl-cap: "Summary of average energy metrics (2019–2023)"
+
 
 summary_table <- energy_filtered %>%
   group_by(country) %>%
@@ -90,8 +86,10 @@ summary_table <- energy_filtered %>%
   )
 
 
-kable(summary_table, caption = "Table 1: Summary of average energy metrics (2019–2023) for selected countries.") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+knitr::kable(summary_table) %>%
+    kable_styling(
+    latex_options = c("hold_position", "repeat_header"),  
+    font_size = 10)                                        
 
 ```
 
@@ -106,11 +104,10 @@ ggplot(energy_long, aes(x = year, y = consumption, color = type)) + geom_line(li
 
 ```
 
-### Result 
+## Result
 
 ```{r, echo=FALSE}
-# Filter and reshape the data
-#| label: fig-renewable_energy_2019-2023
+#| label: fig-renewable
 #| fig-cap: "Renewable Energy Consumption by Source (2019–2023)"
 renewables_compare <- energy_filtered %>%
   filter(country %in% c("Australia", "India", "United States", "China", "United Kingdom")) %>%
@@ -142,13 +139,12 @@ ggplot(renewables_compare, aes(x = factor(year), y = consumption, fill = source)
   )
 
 ```
-@fig-renewable_energy_2019-2023 shows total renewable energy consumption. Australia has significantly adopted solar power due to government incentives and subsidies for rooftop solar installations. In contrast, the United States and the United Kingdom rely more on wind energy, given their larger land areas and favorable wind conditions. Meanwhile, China and India have invested heavily in hydropower, taking advantage of vast river systems, high rainfall, and significant elevation changes.
 
-
+@fig-renewable shows total renewable energy consumption. Australia has significantly adopted solar power due to government incentives and subsidies for rooftop solar installations. In contrast, the United States and the United Kingdom rely more on wind energy, given their larger land areas and favorable wind conditions. Meanwhile, China and India have invested heavily in hydropower, taking advantage of vast river systems, high rainfall, and significant elevation changes.
 
 ```{r}
-# Filter and reshape the data for fossil fuels
-#| label: fig-fossi_fuel_energy_2019-2023
+#| label: fig-fossil
+#| echo: false
 #| fig-cap: "Fossil Fuel Energy Consumption by Source (2019–2023)"
 fossilfuels_compare <- energy_filtered %>%
   filter(country %in% c("Australia", "India", "United States", "China", "United Kingdom")) %>%
@@ -179,51 +175,29 @@ ggplot(fossilfuels_compare, aes(x = factor(year), y = consumption, fill = source
 
 ```
 
-@fig-fossi_fuel_energy_2019-2023 illustrates total fossil fuel consumption. China and India rely heavily on coal for energy due to its domestic affordability and widespread use in power generation. Conversely, Australia, the UK, and the US primarily consume oil and gas for heating, power generation, and transport. Because of its large population—second only to India—China depends significantly on both fossil fuels and renewables to meet its energy demands.
-
-
-```{r, echo=FALSE}
-library(dplyr)
-library(kableExtra)
-
-
-#| label: tbl-summary
-#| tbl-cap: "Summary of average energy metrics (2019–2023)"
-
-summary_table <- energy_filtered %>%
-  group_by(country) %>%
-  summarise(
-    `Avg. Renewable Per Capita (kWh)` = round(mean(renewables_energy_per_capita, na.rm = TRUE), 1),
-    `Avg. Fossil Per Capita (kWh)` = round(mean(fossil_energy_per_capita, na.rm = TRUE), 1),
-    `Renewable Share (%)` = round(mean(renewables_consumption / primary_energy_consumption * 100, na.rm = TRUE), 1)
-  )
-
-knitr::kable(summary_table, caption = "Summary of average energy metrics (2019–2023)") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
-```
+@fig-fossil illustrates total fossil fuel consumption. China and India rely heavily on coal for energy due to its domestic affordability and widespread use in power generation. Conversely, Australia, the UK, and the US primarily consume oil and gas for heating, power generation, and transport. Because of its large population—second only to India—China depends significantly on both fossil fuels and renewables to meet its energy demands.
 
 @tbl-summary shows per capita energy consumption. While these countries are gradually shifting towards renewables, fossil fuels still dominate their overall energy mix. China’s per capita energy use is lower than that of Australia and the United States, which lead in both fossil fuel and renewable energy consumption. Differences in population size, economic structure, geography, and lifestyle drive these variations.
 
 
-### Conclusion 
+## Conclusion
 
 This analysis examined energy consumption trends (2019–2023) in Australia, India, the United States, China, and the United Kingdom, focusing on the shift from fossil fuels to low-carbon and renewable sources. Key factors such as GDP, population, and per capita energy use were evaluated to assess sustainability and economic implications.
 
-Fossil fuels remain dominant across all five economies, but renewable energy adoption varies significantly. China leads in total consumption due to its large population and industrial demand, though per capita usage remains moderate. The UK has the highest renewable share (~19%), supported by strong policy incentives, while India’s renewable growth lags despite rising energy needs. Australia and the US exhibit high per capita consumption, reflecting energy-intensive economies and lifestyles.
+Fossil fuels remain dominant across all five economies, but renewable energy adoption varies significantly. China leads in total consumption due to its large population and industrial demand, though per capita usage remains moderate. The UK has the highest renewable share (\~19%), supported by strong policy incentives, while India’s renewable growth lags despite rising energy needs. Australia and the US exhibit high per capita consumption, reflecting energy-intensive economies and lifestyles.
 
 These trends underscore the influence of economic structure, resource availability, and policy frameworks on national energy strategies. While progress in renewables is evident, fossil fuels still underpin global energy systems, highlighting the need for accelerated transitions to meet sustainability goals.
 
-
-### Recommendation
+## Recommendation
 
 To accelerate the transition to sustainable energy, the following actions should be prioritized:
 
-* Expand Renewable Energy Deployment – Fast-track solar, wind, and other renewable projects to reduce reliance on fossil fuels.
+-   Expand Renewable Energy Deployment – Fast-track solar, wind, and other renewable projects to reduce reliance on fossil fuels.
 
-* Modernize Grid Infrastructure – Upgrade power grids with smart technologies and large-scale battery storage to manage renewable energy variability.
+-   Modernize Grid Infrastructure – Upgrade power grids with smart technologies and large-scale battery storage to manage renewable energy variability.
 
-* Strengthen Policy Support – Implement carbon pricing (taxes or cap-and-trade systems) and enhance incentives for clean energy research, development, and adoption.
+-   Strengthen Policy Support – Implement carbon pricing (taxes or cap-and-trade systems) and enhance incentives for clean energy research, development, and adoption.
 
-### Reference 
+## Reference
 
-Hannah Ritchie, Pablo Rosado, and Max Roser (2023) - “Energy” Published online at OurWorldinData.org. Retrieved from: 'https://ourworldindata.org/energy' [Online Resource]
+Hannah Ritchie, Pablo Rosado, and Max Roser (2023) - “Energy” Published online at OurWorldinData.org. Retrieved from: 'https://ourworldindata.org/energy' \[Online Resource\]
