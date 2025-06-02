@@ -11,6 +11,7 @@ execute:
     warning: false
     message: false
 ---
+
 ```{r setup, include=FALSE}
 library(dplyr)
 library(ggplot2)
@@ -21,7 +22,7 @@ library(tidyr)
 ## Methodology
 
 ```{r data-cleaning, message=FALSE, warning=FALSE}
-# Read the energy data - using relative path for team compatibility
+
 energy <- read.csv("owid-energy-data.csv")
 
 countries <- c("Australia", "India", "United States", "China", "United Kingdom")
@@ -69,26 +70,15 @@ summary_table <- energy_filtered %>%
 
 kable(summary_table, caption = "Table 1: Summary of average energy metrics (2019–2023) for selected countries.") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
-```	
+```
 
+```{r facet-trends, echo=FALSE, fig.cap="...", fig.width=10, fig.height=6}
 
-{r facet-trends, echo=FALSE, fig.cap="Fossil vs. renewable energy consumption (TWh) in each country, 2019–2023.", fig.width=10, fig.height=6}
-library(scales)
+library(scales) 
 library(tidyr)
 
+energy_long <- energy_filtered %>% select(country, year, fossil_fuel_consumption, renewables_consumption) %>% pivot_longer(cols = c(fossil_fuel_consumption, renewables_consumption), names_to = "type", values_to = "consumption") %>% mutate(type = ifelse(type == "fossil_fuel_consumption", "Fossil", "Renewables"))
 
-energy_long <- energy_filtered %>%
-  select(country, year, fossil_fuel_consumption, renewables_consumption) %>%
-  pivot_longer(cols = c(fossil_fuel_consumption, renewables_consumption),
-               names_to = "type", values_to = "consumption") %>%
-  mutate(type = ifelse(type == "fossil_fuel_consumption", "Fossil", "Renewables"))
+ggplot(energy_long, aes(x = year, y = consumption, color = type)) + geom_line(linewidth = 1.2) + geom_point(size = 2) + facet_wrap(~country, scales = "free_y") + labs(x = "Year", y = "Energy Consumption (TWh)", color = "Type") + theme_minimal() + theme(legend.position = "top")
 
-ggplot(energy_long, aes(x = year, y = consumption, color = type)) +
-  geom_line(size = 1.2) +
-  geom_point(size = 2) +
-  facet_wrap(~country, scales = "free_y") +
-  labs(x = "Year", y = "Energy Consumption (TWh)", color = "Type") +
-  theme_minimal() +
-  theme(legend.position = "top")
-
-
+```
