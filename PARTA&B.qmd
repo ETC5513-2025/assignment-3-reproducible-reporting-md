@@ -17,12 +17,14 @@ execute:
     message: false
 ---
 
+
 ```{r setup, include=FALSE}
 library(dplyr)
 library(ggplot2)
 library(kableExtra)
 library(tidyr)
 ```
+
 
 
 ## Executive Summary
@@ -204,3 +206,10 @@ knitr::kable(summary_table, caption = "Summary of average energy metrics (2019�
 @tbl-summary shows per capita energy consumption. While these countries are gradually shifting towards renewables, fossil fuels still dominate their overall energy mix. China’s per capita energy use is lower than that of Australia and the United States, which lead in both fossil fuel and renewable energy consumption. Differences in population size, economic structure, geography, and lifestyle drive these variations.
 
 
+### Conclusion 
+
+This analysis examined energy consumption trends (2019–2023) in Australia, India, the United States, China, and the United Kingdom, focusing on the shift from fossil fuels to low-carbon and renewable sources. Key factors such as GDP, population, and per capita energy use were evaluated to assess sustainability and economic implications.
+
+Fossil fuels remain dominant across all five economies, but renewable energy adoption varies significantly. China leads in total consumption due to its large population and industrial demand, though per capita usage remains moderate. The UK has the highest renewable share (~19%), supported by strong policy incentives, while India’s renewable growth lags despite rising energy needs. Australia and the US exhibit high per capita consumption, reflecting energy-intensive economies and lifestyles.
+
+These trends underscore the influence of economic structure, resource availability, and policy frameworks on national energy strategies. While progress in renewables is evident, fossil fuels still underpin global energy systems, highlighting the need for accelerated transitions to meet sustainability goals.
