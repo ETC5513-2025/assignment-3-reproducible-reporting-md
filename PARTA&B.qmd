@@ -11,8 +11,100 @@ execute:
     warning: false
     message: false
 ---
+### Result 
+
+```{r, echo=FALSE}
+# Filter and reshape the data
+#| label: fig-renewable_energy_2019-2023
+#| fig-cap: "Renewable Energy Consumption by Source (2019–2023)"
+renewables_compare <- energy_filtered %>%
+  filter(country %in% c("Australia", "India", "United States", "China", "United Kingdom")) %>%
+  select(country, year, solar_consumption, wind_consumption, hydro_consumption,
+         other_renewable_consumption, biofuel_consumption) %>%
+  pivot_longer(cols = -c(country, year), names_to = "source", values_to = "consumption") %>%
+  mutate(source = case_when(
+    source == "solar_consumption" ~ "Solar",
+    source == "wind_consumption" ~ "Wind",
+    source == "hydro_consumption" ~ "Hydro",
+    source == "other_renewable_consumption" ~ "Other Renewables",
+    source == "biofuel_consumption" ~ "Biofuel"
+  ))
+
+
+ggplot(renewables_compare, aes(x = factor(year), y = consumption, fill = source)) +
+  geom_col(position = "dodge") +
+  facet_wrap(~ country, scales = "free_y") +
+  labs(
+    title = "Renewable Energy Consumption by Source (2019–2023)",
+    subtitle = "Comparison Across Australia, India, United States, China, and United Kingdom",
+    x = "Year",
+    y = "Consumption (TWh)",
+    fill = "Energy Source"
+  ) +
+  theme_minimal() +
+  theme(
+    strip.text = element_text(face = "bold"),
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+
+```
+@fig-renewable_energy_2019-2023 shows total renewable energy consumption. Australia has significantly adopted solar power due to government incentives and subsidies for rooftop solar installations. In contrast, the United States and the United Kingdom rely more on wind energy, given their larger land areas and favorable wind conditions. Meanwhile, China and India have invested heavily in hydropower, taking advantage of vast river systems, high rainfall, and significant elevation changes.
 
 
 
+```{r}
+# Filter and reshape the data for fossil fuels
+#| label: fig-fossi_fuel_energy_2019-2023
+#| fig-cap: "Fossil Fuel Energy Consumption by Source (2019–2023)"
+fossilfuels_compare <- energy_filtered %>%
+  filter(country %in% c("Australia", "India", "United States", "China", "United Kingdom")) %>%
+  select(country, year, coal_consumption, oil_consumption, gas_consumption) %>%
+  pivot_longer(cols = -c(country, year), names_to = "source", values_to = "consumption") %>%
+  mutate(source = case_when(
+    source == "coal_consumption" ~ "Coal",
+    source == "oil_consumption" ~ "Oil",
+    source == "gas_consumption" ~ "Gas"
+  ))
+
+# Plot the fossil fuel consumption
+ggplot(fossilfuels_compare, aes(x = factor(year), y = consumption, fill = source)) +
+  geom_col(position = "dodge") +
+  facet_wrap(~ country, scales = "free_y") +
+  labs(
+    title = "Fossil Fuel Consumption by Source (2019–2023)",
+    subtitle = "Comparison Across Australia, India, United States, China, and United Kingdom",
+    x = "Year",
+    y = "Consumption (TWh)",
+    fill = "Fossil Fuel Source"
+  ) +
+  theme_minimal() +
+  theme(
+    strip.text = element_text(face = "bold"),
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+
+```
+
+@fig-fossi_fuel_energy_2019-2023 illustrates total fossil fuel consumption. China and India rely heavily on coal for energy due to its domestic affordability and widespread use in power generation. Conversely, Australia, the UK, and the US primarily consume oil and gas for heating, power generation, and transport. Because of its large population—second only to India—China depends significantly on both fossil fuels and renewables to meet its energy demands.
 
 
+
+```{r, echo=FALSE}
+library(dplyr)
+library(kableExtra)
+#| label: tbl-summary
+#| tbl-cap: "Summary of average energy metrics (2019–2023)"
+
+summary_table <- energy_filtered %>%
+  group_by(country) %>%
+  summarise(
+    `Avg. Renewable Per Capita (kWh)` = round(mean(renewables_energy_per_capita, na.rm = TRUE), 1),
+    `Avg. Fossil Per Capita (kWh)` = round(mean(fossil_energy_per_capita, na.rm = TRUE), 1),
+    `Renewable Share (%)` = round(mean(renewables_consumption / primary_energy_consumption * 100, na.rm = TRUE), 1)
+  )
+
+knitr::kable(summary_table, caption = "Summary of average energy metrics (2019–2023)") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+```
+
+@tbl-summary shows per capita energy consumption. While these countries are gradually shifting towards renewables, fossil fuels still dominate their overall energy mix. China’s per capita energy use is lower than that of Australia and the United States, which lead in both fossil fuel and renewable energy consumption. Differences in population size, economic structure, geography, and lifestyle drive these variations.
