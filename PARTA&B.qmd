@@ -12,7 +12,13 @@ execute:
     message: false
 ---
 
+### Conclusion 
 
+This analysis examined energy consumption trends (2019–2023) in Australia, India, the United States, China, and the United Kingdom, focusing on the shift from fossil fuels to low-carbon and renewable sources. Key factors such as GDP, population, and per capita energy use were evaluated to assess sustainability and economic implications.
+
+Fossil fuels remain dominant across all five economies, but renewable energy adoption varies significantly. China leads in total consumption due to its large population and industrial demand, though per capita usage remains moderate. The UK has the highest renewable share (~19%), supported by strong policy incentives, while India’s renewable growth lags despite rising energy needs. Australia and the US exhibit high per capita consumption, reflecting energy-intensive economies and lifestyles.
+
+These trends underscore the influence of economic structure, resource availability, and policy frameworks on national energy strategies. While progress in renewables is evident, fossil fuels still underpin global energy systems, highlighting the need for accelerated transitions to meet sustainability goals.
 
 
 
