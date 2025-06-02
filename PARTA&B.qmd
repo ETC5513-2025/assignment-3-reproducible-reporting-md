@@ -224,4 +224,6 @@ To accelerate the transition to sustainable energy, the following actions should
 
 * Strengthen Policy Support – Implement carbon pricing (taxes or cap-and-trade systems) and enhance incentives for clean energy research, development, and adoption.
 
+### Reference 
 
+Hannah Ritchie, Pablo Rosado, and Max Roser (2023) - “Energy” Published online at OurWorldinData.org. Retrieved from: 'https://ourworldindata.org/energy' [Online Resource]
