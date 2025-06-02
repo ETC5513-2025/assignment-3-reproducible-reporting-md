@@ -12,7 +12,15 @@ execute:
     message: false
 ---
 
+```{r setup, include=FALSE}
+library(dplyr)
+library(ggplot2)
+library(kableExtra)
+```
 
+## Executive Summary
+
+Australia, India, the United States, China, and the United Kingdom's worldwide energy consumption patterns from 2019 to 2023 are examined in this paper. It examines how low-carbon and renewable energy sources are replacing fossil fuels. Important variables are looked at, including GDP, population, and several energy measurements. The results provide credence to current debates about the economic ramifications and sustainability of energy.
 
 
 
