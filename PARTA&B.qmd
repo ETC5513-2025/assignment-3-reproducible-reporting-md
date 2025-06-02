@@ -2,16 +2,30 @@
 title: "ETC5513 Assignment 3"
 author: "Mey Siv and Devaansh Gupta"
 editor: visual
-format: 
-  html: 
+format:
+  html:
     theme: cerulean
-  pdf: default
+    toc: true
+    toc-depth: 2
+  pdf: 
+    toc: true
+    toc-depth: 2
+    number-sections: true
 execute:
-    echo: true
+    echo: false
     warning: false
     message: false
 ---
 
+```{r setup, include=FALSE}
+library(dplyr)
+library(ggplot2)
+library(kableExtra)
+```
+
+## Introduction
+
+Energy use is essential for both environmental sustainability and economic growth. Countries have been focusing more and more on low-carbon and renewable energy sources in recent years. Australia, India, the United States, China, and the United Kingdom are the five major economies whose energy consumption trends are evaluated in this paper from 2019 to 2023. These nations were chosen because of their varied economic systems, population sizes, and energy strategies. Understanding the evolution of energy demand, particularly from fossil and renewable sources, is the goal. We also take into account the correlation between these changes and changes in the population and GDP. The goal of the analysis is to highlight both domestic and international trends related to energy policy. To guarantee clarity and reproducibility, R and R Markdown are used for all analyses.
 
 
 
