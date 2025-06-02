@@ -2,17 +2,96 @@
 title: "ETC5513 Assignment 3"
 author: "Mey Siv and Devaansh Gupta"
 editor: visual
-format: 
-  html: 
+format:
+  html:
     theme: cerulean
-  pdf: default
+    toc: true
+    toc-depth: 2
+  pdf: 
+    toc: true
+    toc-depth: 2
+    number-sections: true
 execute:
-    echo: true
+    echo: false
     warning: false
     message: false
 ---
 
+```{r setup, include=FALSE}
+library(dplyr)
+library(ggplot2)
+library(kableExtra)
+library(tidyr)
+```
 
+## Executive Summary
 
+Australia, India, the United States, China, and the United Kingdom's worldwide energy consumption patterns from 2019 to 2023 are examined in this paper. It examines how low-carbon and renewable energy sources are replacing fossil fuels. Important variables are looked at, including GDP, population, and several energy measurements. The results provide credence to current debates about the economic ramifications and sustainability of energy.
 
+## Introduction
 
+Energy use is essential for both environmental sustainability and economic growth. Countries have been focusing more and more on low-carbon and renewable energy sources in recent years. Australia, India, the United States, China, and the United Kingdom are the five major economies whose energy consumption trends are evaluated in this paper from 2019 to 2023. These nations were chosen because of their varied economic systems, population sizes, and energy strategies. Understanding the evolution of energy demand, particularly from fossil and renewable sources, is the goal. We also take into account the correlation between these changes and changes in the population and GDP. The goal of the analysis is to highlight both domestic and international trends related to energy policy. To guarantee clarity and reproducibility, R and R Markdown are used for all analyses.
+
+## Methodology
+
+```{r data-cleaning, message=FALSE, warning=FALSE}
+
+energy <- read.csv("owid-energy-data.csv")
+
+countries <- c("Australia", "India", "United States", "China", "United Kingdom")
+years <- 2019:2023
+
+selected_vars <- c(
+  "country", "year", "population", "gdp", "biofuel_consumption", "biofuel_cons_per_capita",
+  "coal_consumption", "coal_cons_per_capita", "energy_cons_change_twh", "energy_per_capita",
+  "energy_per_gdp", "fossil_cons_change_twh", "fossil_elec_per_capita", "fossil_energy_per_capita",
+  "fossil_fuel_consumption", "gas_consumption", "gas_elec_per_capita", "gas_energy_per_capita",
+  "hydro_consumption", "hydro_energy_per_capita", "low_carbon_consumption",
+  "low_carbon_energy_per_capita", "nuclear_consumption", "nuclear_energy_per_capita",
+  "oil_consumption", "oil_energy_per_capita", "other_renewable_consumption",
+  "other_renewables_energy_per_capita", "primary_energy_consumption",
+  "renewables_consumption", "renewables_energy_per_capita", "solar_consumption",
+  "solar_energy_per_capita", "wind_consumption", "wind_energy_per_capita"
+)
+
+energy_filtered <- energy %>%
+  filter(country %in% countries, year %in% years) %>%
+  select(all_of(selected_vars)) %>%
+  drop_na(population)
+```
+
+Five major economies—Australia, India, the United States, China, and the United Kingdom—are the focus of this analysis, which makes use of the "Our World in Data" global energy dataset. These nations were chosen due to their varied economic situations, population sizes, and energy regulations. The study, which spans 2019–2023, attempts to evaluate how patterns of energy consumption—specifically, fossil versus renewable sources—have changed recently.
+
+Only pertinent energy metrics, including population, GDP, total and per capita use of fossil fuels and renewables, and other low-carbon sources including hydro, wind, and solar, were kept in a filtered subset of the dataset. For important variables like population, missing data were eliminated to guarantee consistency. Both absolute and intensity-based energy use were reflected in the selection of key variables.
+
+Each country's average energy consumption over the course of five years is shown in the table, along with the average energy consumption from fossil fuels and renewables per capita. We may assess the degree of integration of renewable energy in national energy profiles using this comparative table.
+
+Facet plots are used in the figure to display time-series trends of both fossil and renewable energy consumption, allowing for a side-by-side comparison of changes in energy patterns across nations. This graphic aids in determining if nations are shifting away from fossil fuels and toward clean energy.
+
+To ensure complete reproducibility, all analyses and visualizations were carried out in R utilizing tidyverse tools through R Markdown. The use of chunk options (`echo=FALSE`, `message=FALSE`, `warning=FALSE`) ensures that code does not distract from the professional presentation of the report, while still enabling seamless re-execution if the data or methods are updated.
+
+### Table 1: Summary of average energy metrics (2019–2023) for selected countries.
+
+```{r summary-table, echo=FALSE, results='asis'}
+summary_table <- energy_filtered %>%
+  group_by(country) %>%
+  summarise(
+    `Avg. Renewable Per Capita (kWh)` = round(mean(renewables_energy_per_capita, na.rm = TRUE), 1),
+    `Avg. Fossil Per Capita (kWh)` = round(mean(fossil_energy_per_capita, na.rm = TRUE), 1),
+    `Renewable Share (%)` = round(mean(renewables_consumption / primary_energy_consumption * 100, na.rm = TRUE), 1)
+  )
+
+kable(summary_table, caption = "Table 1: Summary of average energy metrics (2019–2023) for selected countries.") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+```
+
+```{r facet-trends, echo=FALSE, fig.cap="...", fig.width=10, fig.height=6}
+
+library(scales) 
+library(tidyr)
+
+energy_long <- energy_filtered %>% select(country, year, fossil_fuel_consumption, renewables_consumption) %>% pivot_longer(cols = c(fossil_fuel_consumption, renewables_consumption), names_to = "type", values_to = "consumption") %>% mutate(type = ifelse(type == "fossil_fuel_consumption", "Fossil", "Renewables"))
+
+ggplot(energy_long, aes(x = year, y = consumption, color = type)) + geom_line(linewidth = 1.2) + geom_point(size = 2) + facet_wrap(~country, scales = "free_y") + labs(x = "Year", y = "Energy Consumption (TWh)", color = "Type") + theme_minimal() + theme(legend.position = "top")
+
+```
